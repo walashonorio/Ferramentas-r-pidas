@@ -1,0 +1,124 @@
+from pathlib import Path
+
+out = Path("/mnt/data/style.css")
+out.write_text("""* {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #172033;
+  background: #f5f7fb;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.wrap {
+  width: min(1100px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+header {
+  padding: 48px 0 40px;
+  background: #172033;
+  color: white;
+}
+
+header h1 {
+  margin: 0 0 10px;
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+header p {
+  margin: 0;
+  color: #dbe2f0;
+  font-size: 1.05rem;
+}
+
+main {
+  flex: 1;
+  padding: 40px 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e1e6ef;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 8px 24px rgba(23, 32, 51, 0.07);
+}
+
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+
+label {
+  display: block;
+  margin: 16px 0;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  margin-top: 8px;
+  padding: 13px 14px;
+  border: 1px solid #cbd3df;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+button {
+  width: 100%;
+  margin-top: 8px;
+  padding: 13px 16px;
+  border: 0;
+  border-radius: 10px;
+  background: #172033;
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 10px;
+  background: #eef2f7;
+  font-weight: 700;
+}
+
+.soon span {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #eef2f7;
+  font-size: 0.9rem;
+}
+
+footer {
+  padding: 24px 0;
+  border-top: 1px solid #e1e6ef;
+  background: white;
+  color: #687386;
+  text-align: center;
+}
+""", encoding="utf-8")
+print(out)
