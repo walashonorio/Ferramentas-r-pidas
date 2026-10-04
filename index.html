@@ -1,0 +1,57 @@
+from pathlib import Path
+import zipfile, textwrap
+
+root = Path("/mnt/data/portal-ferramentas")
+root.mkdir(exist_ok=True)
+
+html = """<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ferramentas Rápidas</title>
+  <meta name="description" content="Ferramentas online gratuitas e rápidas para o dia a dia.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Ferramentas Rápidas</h1>
+      <p>Ferramentas gratuitas para resolver contas e tarefas do dia a dia.</p>
+    </div>
+  </header>
+  <main class="wrap">
+    <section class="grid">
+      <article class="card">
+        <h2>Calculadora de porcentagem</h2>
+        <label>Quanto é <input id="percent" type="number" step="any" placeholder="10">%</label>
+        <label>de <input id="base" type="number" step="any" placeholder="200"></label>
+        <button onclick="calcPercent()">Calcular</button>
+        <div id="result" class="result">Resultado: —</div>
+      </article>
+      <article class="card soon">
+        <h2>Mais ferramentas</h2>
+        <p>Regra de três, juros compostos, idade, férias, salário e muito mais.</p>
+        <span>Em breve</span>
+      </article>
+    </section>
+  </main>
+  <footer><div class="wrap">Ferramentas Rápidas · Gratuito</div></footer>
+  <script src="script.js"></script>
+</body>
+</html>"""
+
+css = """*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}header{background:#fff;border-bottom:1px solid #e5e7eb;padding:42px 0}.wrap{width:min(1100px,92%);margin:auto}h1{margin:0 0 8px;font-size:36px}header p{margin:0;color:#667085}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;padding:35px 0}.card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:24px;box-shadow:0 5px 18px #00000008}.card h2{margin-top:0}.card label{display:block;margin:15px 0;color:#475467}input{display:block;width:100%;margin-top:7px;padding:12px;border:1px solid #d0d5dd;border-radius:9px;font-size:16px}button{width:100%;padding:12px;border:0;border-radius:9px;background:#111827;color:white;font-size:16px;cursor:pointer}.result{margin-top:16px;padding:14px;border-radius:9px;background:#f2f4f7;font-weight:bold}.soon span{display:inline-block;margin-top:10px;padding:7px 10px;border-radius:999px;background:#eef2ff;color:#3730a3}footer{padding:30px 0;color:#667085;font-size:14px}"""
+
+js = """function calcPercent(){const p=parseFloat(document.getElementById('percent').value);const b=parseFloat(document.getElementById('base').value);const r=document.getElementById('result');if(Number.isNaN(p)||Number.isNaN(b)){r.textContent='Resultado: preencha os dois campos';return}r.textContent='Resultado: '+((p*b)/100).toLocaleString('pt-BR',{maximumFractionDigits:2})}"""
+
+(root/"index.html").write_text(html, encoding="utf-8")
+(root/"style.css").write_text(css, encoding="utf-8")
+(root/"script.js").write_text(js, encoding="utf-8")
+
+zip_path = Path("/mnt/data/portal-ferramentas-v1.zip")
+with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
+    for f in root.iterdir():
+        z.write(f, f.name)
+
+print(f"Primeira versão criada: {zip_path}")
